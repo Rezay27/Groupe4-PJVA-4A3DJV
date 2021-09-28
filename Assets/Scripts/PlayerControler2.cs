@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControler2 : MonoBehaviour
 {
     public Vector3 RotatePoint;
     private float previousTime;
@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Keypad1))
         {
             transform.position += new Vector3(-1, 0, 0);
             if (!CheckMove())
@@ -29,7 +29,7 @@ public class PlayerControl : MonoBehaviour
                 transform.position += new Vector3(1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             transform.position += new Vector3(1, 0, 0);
             if (!CheckMove())
@@ -37,7 +37,7 @@ public class PlayerControl : MonoBehaviour
                 transform.position += new Vector3(-1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0,0,1), 90);
             if (!CheckMove())
@@ -45,7 +45,7 @@ public class PlayerControl : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.Keypad6))
         {
             transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             if (!CheckMove())
@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        if (Time.time - previousTime > (Input.GetKey(KeyCode.S) ? fallTime/10 : fallTime))
+        if (Time.time - previousTime > (Input.GetKey(KeyCode.Keypad2) ? fallTime/10 : fallTime))
         {
             transform.position += new Vector3(0, -1, 0);
             if (!CheckMove())
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour
                 this.enabled = false;
                 if (!Loose)
                 {
-                    GameObject.FindGameObjectWithTag("player1").GetComponent<Spawn>().GetShape();
+                    GameObject.FindGameObjectWithTag("player2").GetComponent<Spawn>().GetShape();
                 }
                 
             }
@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
     {
         foreach(Transform children in transform)
         {
-            int X = Mathf.RoundToInt(children.transform.position.x);
+            int X = Mathf.RoundToInt(children.transform.position.x)-25;
             int Y = Mathf.RoundToInt(children.transform.position.y);
 
             if (X < 0 || X >= width || Y < 0 || Y >= height)
@@ -150,7 +150,7 @@ public class PlayerControl : MonoBehaviour
     {
         foreach (Transform children in transform)
         {
-            int X = Mathf.RoundToInt(children.transform.position.x);
+            int X = Mathf.RoundToInt(children.transform.position.x)-25;
             int Y = Mathf.RoundToInt(children.transform.position.y);
 
             if (Y >= height)
@@ -164,6 +164,4 @@ public class PlayerControl : MonoBehaviour
             
         }
     }
-
-    
 }
