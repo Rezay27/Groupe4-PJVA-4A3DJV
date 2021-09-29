@@ -23,6 +23,34 @@ public class PileManager : MonoBehaviour
     {
         
     }
+    
+    public void Switch(MonoBehaviour shape, int type)
+    {
+        var playerShapeP = shape.transform.position;
+        shape.enabled = false;
+        shape.transform.position = pile[4].position;
+        pile[4].position = playerShapeP;
+
+        if (type == 0)
+        {
+            pile[4].gameObject.GetComponent<PlayerControl>().enabled = true;
+        }
+        else if (type == 1)
+        {
+            pile[4].gameObject.GetComponent<PlayerControler2>().enabled = true;
+        }
+        /*else if (type == 2)
+        {
+            pile[4].gameObject.GetComponent<PlayerControler2>().enabled = true;
+        }
+        else if (type == 3)
+        {
+            pile[4].gameObject.GetComponent<PlayerControler2>().enabled = true;
+        }*/
+        
+        pile[4] = shape.transform;
+
+    }
 
     public void GoUp()
     {

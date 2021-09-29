@@ -53,6 +53,15 @@ public class PlayerControler2 : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
             }
         }
+        
+        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            FindObjectOfType<PileManager>().Switch(this, 1);
+            if (!CheckMove())
+            {
+                FindObjectOfType<PileManager>().Switch(this, 1);
+            }
+        }
 
 
         if (Time.time - previousTime > (Input.GetKey(KeyCode.Keypad2) ? fallTime/10 : fallTime))
