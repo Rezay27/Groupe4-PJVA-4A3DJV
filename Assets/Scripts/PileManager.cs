@@ -36,12 +36,14 @@ public class PileManager : MonoBehaviour
         {
             shape.gameObject.GetComponent<PlayerControl>().swaped = false;
             shape.gameObject.GetComponent<PlayerControl>().enabled = false;
-            
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
+
         }
         else if (type == 1)
         {
             shape.gameObject.GetComponent<PlayerControler2>().swaped = false;
             shape.gameObject.GetComponent<PlayerControler2>().enabled = false;
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
         }
         else if (type == 2)
         {
@@ -71,11 +73,13 @@ public class PileManager : MonoBehaviour
         {
             pile[4].gameObject.GetComponent<PlayerControl>().enabled = true;
             pile[4].gameObject.GetComponent<PlayerControl>().swaped = true;
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = true;
         }
         else if (type == 1)
         {
             pile[4].gameObject.GetComponent<PlayerControler2>().enabled = true;
             pile[4].gameObject.GetComponent<PlayerControler2>().swaped = true;
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
         }
         else if (type == 2)
         {

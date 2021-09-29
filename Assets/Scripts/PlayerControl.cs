@@ -7,24 +7,15 @@ public class PlayerControl : MonoBehaviour
     public Vector3 RotatePoint;
     private float previousTime;
     public float fallTime;
-    public static int height = 20;
-    public static int width = 10;
-    private static Transform[,] grid = new Transform[width, height];
-    public bool Loose;
     public bool swaped;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool Player1;
 
     // Update is called once per frame
     void Update()
     {
         if (swaped)
         {
-            if (!CheckMove())
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 FindObjectOfType<PileManager>().Switch(this, 0);
             }
@@ -34,153 +25,128 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Q) && Player1 == true)
         {
-            transform.position += new Vector3(-1, 0, 0);
-            if (!CheckMove())
+            FindObjectOfType<Action>().MoveLeft(transform);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 transform.position += new Vector3(1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKeyDown(KeyCode.D) && Player1 == true)
         {
-            transform.position += new Vector3(1, 0, 0);
-            if (!CheckMove())
+            FindObjectOfType<Action>().MoveRight(transform);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 transform.position += new Vector3(-1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A) && Player1 == true)
         {
-            transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0,0,1), 90);
-            if (!CheckMove())
+            FindObjectOfType<Action>().RotateLeft(transform, RotatePoint);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.E) && Player1 == true)
         {
-            transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
-            if (!CheckMove())
+            FindObjectOfType<Action>().RotateRight(transform, RotatePoint);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Z) && transform.position.y != 19)
+        else if (Input.GetKeyDown(KeyCode.Z) && transform.position.y != 19 && Player1 == true)
         {
             FindObjectOfType<PileManager>().Switch(this, 0);
         }
 
 
-        if (Time.time - previousTime > (Input.GetKey(KeyCode.S) ? fallTime/10 : fallTime))
+        if (Time.time - previousTime > (Input.GetKey(KeyCode.S) ? fallTime/10 : fallTime) && Player1 == true)
         {
             transform.position += new Vector3(0, -1, 0);
-            if (!CheckMove())
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
                 transform.position += new Vector3(0, 1, 0);
-                AddToGrid();
-                CheckForLines();
+                FindObjectOfType<PlayerArea>().AddToGrid(Player1, transform);
+                FindObjectOfType<PlayerArea>().CheckForLines();
                 this.enabled = false;
-                if (!Loose)
+                if (!FindObjectOfType<PlayerArea>().Loose)
                 {
                     GameObject.FindGameObjectWithTag("player1").GetComponent<Spawn>().GetShape();
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Perdu player1");
                 }
                 
             }
             previousTime = Time.time;
         }
-    }
-
-    bool CheckMove()
-    {
-        foreach(Transform children in transform)
+        if(Input.GetKeyDown(KeyCode.Keypad1) && Player1 == false)
         {
-            int X = Mathf.RoundToInt(children.transform.position.x);
-            int Y = Mathf.RoundToInt(children.transform.position.y);
-
-            if (X < 0 || X >= width || Y < 0 || Y >= height)
+            transform.position += new Vector3(-1, 0, 0);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
-                return false;
-            }
-
-            if (grid[X, Y] != null)
-            {
-                return false;
+                transform.position += new Vector3(1, 0, 0);
             }
         }
-
-       
-
-        return true;
-    }
-
-    void CheckForLines()
-    {
-        for (int i = height - 1; i >= 0; i--)
+        else if (Input.GetKeyDown(KeyCode.Keypad3) && Player1 == false)
         {
-            if (HasLine(i))
+            transform.position += new Vector3(1, 0, 0);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
-                DeleteLine(i);
-                GoDown(i);
+                transform.position += new Vector3(-1, 0, 0);
             }
         }
-    }
-
-    bool HasLine(int i)
-    {
-        for (int j=0; j < width; j++)
+        else if (Input.GetKeyDown(KeyCode.Keypad4) && Player1 == false)
         {
-            if (grid[j,i]== null)
+            transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
-                return false;
+                transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             }
         }
-        return true;
-    }
-
-    void DeleteLine(int i)
-    {
-        for (int j = 0; j <width; j++)
+        else if (Input.GetKeyDown(KeyCode.Keypad6) && Player1 == false)
         {
-            Destroy(grid[j, i].gameObject);
-            grid[j, i] = null;
-        }
-    }
-
-    void GoDown(int i)
-    {
-        for (int y = i; y< height; y++)
-        {
-            for (int j = 0; j< width; j++)
+            transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
             {
-                if(grid[j,y] != null)
+                transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Keypad5) && transform.position.y != 19 && Player1 == false)
+        {
+            FindObjectOfType<PileManager>().Switch(this, 1);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
+            {
+                FindObjectOfType<PileManager>().Switch(this, 1);
+            }
+        }
+
+
+        if (Time.time - previousTime > (Input.GetKey(KeyCode.Keypad2) ? fallTime / 10 : fallTime) && Player1 == false)
+        {
+            transform.position += new Vector3(0, -1, 0);
+            if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
+            {
+                transform.position += new Vector3(0, 1, 0);
+                FindObjectOfType<PlayerArea>().AddToGrid(Player1, transform);
+                FindObjectOfType<PlayerArea>().CheckForLines();
+                this.enabled = false;
+                if (!FindObjectOfType<PlayerArea>().Loose)
                 {
-                    grid[j, y - 1] = grid[j, y];
-                    grid[j, y] = null;
-                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
+                    GameObject.FindGameObjectWithTag("player2").GetComponent<Spawn>().GetShape();
                 }
+                else
+                {
+                    Debug.LogWarningFormat("Perdu player2");
+                }
+
             }
+            previousTime = Time.time;
         }
-    }
-
-    void AddToGrid()
-    {
-        foreach (Transform children in transform)
-        {
-            int X = Mathf.RoundToInt(children.transform.position.x);
-            int Y = Mathf.RoundToInt(children.transform.position.y);
-
-            if (Y >= height)
-            {
-                Loose = true;
-            }
-            else
-            {
-                grid[X, Y] = children;
-            }
-            
-        }
-    }
-
-    
+    }    
 }

@@ -24,16 +24,16 @@ public class Spawn : MonoBehaviour
     public void GetShape()
     {
         var shape = pile.pile[pile.pile.Length-1];
+        shape.GetComponent<PlayerControl>().enabled = true;
         pile.pile[pile.pile.Length - 1] = null;
         pile.GoUp();
         
         if (player1)
         {
-            shape.GetComponent<PlayerControl>().enabled = true;
+            shape.GetComponent<PlayerControl>().Player1 = true;
         }
         else if (player2)
         {
-            shape.GetComponent<PlayerControler2>().enabled = true;
         }
         else if (RandomIA)
         {
