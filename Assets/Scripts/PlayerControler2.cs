@@ -11,6 +11,7 @@ public class PlayerControler2 : MonoBehaviour
     public static int width = 10;
     private static Transform[,] grid = new Transform[width, height];
     public bool Loose;
+    public bool swaped;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,20 @@ public class PlayerControler2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Keypad1))
+
+        if (swaped)
+        {
+            if (!CheckMove())
+            {
+                FindObjectOfType<PileManager>().Switch(this, 1);
+            }
+            else
+            {
+                swaped = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             transform.position += new Vector3(-1, 0, 0);
             if (!CheckMove())
@@ -54,7 +68,7 @@ public class PlayerControler2 : MonoBehaviour
             }
         }
         
-        else if (Input.GetKeyDown(KeyCode.Keypad5))
+        else if (Input.GetKeyDown(KeyCode.Keypad5) && transform.position.y != 19)
         {
             FindObjectOfType<PileManager>().Switch(this, 1);
             if (!CheckMove())

@@ -35,6 +35,10 @@ public class Spawn : MonoBehaviour
         {
             shape.GetComponent<PlayerControler2>().enabled = true;
         }
+        else if (RandomIA)
+        {
+            shape.GetComponent<IdiotControler>().enabled = true;
+        }
 
         shape.position = transform.position;
 
