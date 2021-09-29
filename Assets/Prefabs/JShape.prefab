@@ -295,7 +295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8612293642631315098}
   - component: {fileID: 8612293642631315099}
-  - component: {fileID: 9200982672559290659}
   - component: {fileID: 7199041311880972857}
   m_Layer: 0
   m_Name: JShape
@@ -336,22 +335,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotatePoint: {x: 1, y: 0, z: 0}
   fallTime: 0.5
-  Loose: 0
---- !u!114 &9200982672559290659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8612293642631315096}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2460a433c983a4e9daf45ca285b530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RotatePoint: {x: 1, y: 0, z: 0}
-  fallTime: 0.5
-  Loose: 0
+  swaped: 0
+  Player1: 0
 --- !u!114 &7199041311880972857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,8 +350,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotatePoint: {x: 1, y: 0, z: 0}
+  previousTime: 0
   fallTime: 0.5
   Loose: 0
+  swaped: 0
 --- !u!1 &8612293642779307684
 GameObject:
   m_ObjectHideFlags: 0

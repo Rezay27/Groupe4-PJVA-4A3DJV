@@ -200,7 +200,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3408547381382181121}
   - component: {fileID: 3408547381382181182}
-  - component: {fileID: -4420702943390236824}
   - component: {fileID: 9159535917000161327}
   m_Layer: 0
   m_Name: SShape
@@ -241,22 +240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotatePoint: {x: 0, y: 0, z: 0}
   fallTime: 0.5
-  Loose: 0
---- !u!114 &-4420702943390236824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3408547381382181183}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd2460a433c983a4e9daf45ca285b530, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RotatePoint: {x: 0, y: 0, z: 0}
-  fallTime: 0.5
-  Loose: 0
+  swaped: 0
+  Player1: 0
 --- !u!114 &9159535917000161327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,8 +255,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotatePoint: {x: 0, y: 0, z: 0}
+  previousTime: 0
   fallTime: 0.5
   Loose: 0
+  swaped: 0
 --- !u!1 &3408547381998600819
 GameObject:
   m_ObjectHideFlags: 0

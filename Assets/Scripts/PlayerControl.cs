@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
     public float fallTime;
     public bool swaped;
     public bool Player1;
+    public bool Random;
 
     // Update is called once per frame
     void Update()
@@ -78,13 +79,23 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
+                    if (Random == false)
+                    {
+                        FindObjectOfType<Menu>().Winner = "player2";
+                    }
+                    else
+                    {
+                        FindObjectOfType<Menu>().Winner = "Random";
+                    }
+                    FindObjectOfType<Menu>().End();
                     Debug.LogWarningFormat("Perdu player1");
+                    Time.timeScale = 0;
                 }
-                
+
             }
             previousTime = Time.time;
         }
-        if(Input.GetKeyDown(KeyCode.Keypad1) && Player1 == false)
+        if(Input.GetKeyDown(KeyCode.Keypad1) && Player1 == false && Random == false)
         {
             transform.position += new Vector3(-1, 0, 0);
             if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
@@ -92,7 +103,7 @@ public class PlayerControl : MonoBehaviour
                 transform.position += new Vector3(1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad3) && Player1 == false)
+        else if (Input.GetKeyDown(KeyCode.Keypad3) && Player1 == false && Random == false)
         {
             transform.position += new Vector3(1, 0, 0);
             if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
@@ -100,7 +111,7 @@ public class PlayerControl : MonoBehaviour
                 transform.position += new Vector3(-1, 0, 0);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad4) && Player1 == false)
+        else if (Input.GetKeyDown(KeyCode.Keypad4) && Player1 == false && Random == false)
         {
             transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
             if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
@@ -108,7 +119,7 @@ public class PlayerControl : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad6) && Player1 == false)
+        else if (Input.GetKeyDown(KeyCode.Keypad6) && Player1 == false && Random == false)
         {
             transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             if (!FindObjectOfType<PlayerArea>().CheckMove(Player1, transform))
@@ -142,7 +153,17 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarningFormat("Perdu player2");
+                    FindObjectOfType<Menu>().Winner = "player1";
+                    FindObjectOfType<Menu>().End();
+                    if (Random == false)
+                    {
+                        Debug.LogWarningFormat("Perdu player2");
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Perdu Random"); 
+                    }                    
+                    Time.timeScale = 0;
                 }
 
             }
