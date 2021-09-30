@@ -14,7 +14,9 @@ public class IdiotControler : MonoBehaviour
     public bool Loose;
     private static int nbAction = 6;
     public bool swaped;
-    public int counter = 10;
+    public bool counter = false;
+    public float Timer = 0.5f;
+    public float ResetTimer = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,8 @@ public class IdiotControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Timer -= Time.deltaTime;
+        Debug.LogWarningFormat(Timer.ToString());
         if (swaped)
         {
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
@@ -37,61 +40,67 @@ public class IdiotControler : MonoBehaviour
         }
 
         int action = Random.Range(0, nbAction);
-        if (counter != 0)
-        {
-            counter--;
-        }
 
-        if (counter == 0)
-        {
-            counter = 10;
-        }
-
-        if (action == 0)
+        if (action == 0 && Timer <= 0)
         {
             FindObjectOfType<Action>().MoveLeft(transform);
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
             {
                 transform.position += new Vector3(1, 0, 0);
             }
+            Timer = ResetTimer;
+            counter = true;
         }
 
-        if (action == 1)
+        if (action == 1 && Timer <= 0)
         {
             FindObjectOfType<Action>().MoveRight(transform);
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
             {
                 transform.position += new Vector3(-1, 0, 0);
             }
+            Timer = ResetTimer;
+            counter = true;
         }
 
-        if (action == 2)
+        if (action == 2 && Timer <= 0)
         {
             FindObjectOfType<Action>().RotateLeft(transform, RotatePoint);
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
             {
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), -90);
             }
+            Timer = ResetTimer;
+            counter = true;
         }
 
-        if (action == 3)
+        if (action == 3 && Timer <= 0)
         {
             FindObjectOfType<Action>().RotateRight(transform, RotatePoint);
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
             {
                 transform.RotateAround(transform.TransformPoint(RotatePoint), new Vector3(0, 0, 1), 90);
             }
+            Timer = ResetTimer;
+            counter = true;
         }
 
-        if (action == 4 && transform.position.y != 19 && counter == 0)
+        if (action == 4 && transform.position.y != 19 && Timer <= 0 && counter == true)
         {
             SwapShape();
+            counter = false;
         }
 
 
         if (previousTime > (nbAction-1 == action ? fallTime / 10 : fallTime))
         {
-            transform.position += new Vector3(0, -1, 0);
+            if(Timer <= 0)
+            {
+                FindObjectOfType<Action>().MoveDown(transform);
+                Timer = ResetTimer;
+                counter = true;
+            }
+            
             if (!FindObjectOfType<PlayerArea>().CheckMove(false, transform))
             {
                 transform.position += new Vector3(0, 1, 0);

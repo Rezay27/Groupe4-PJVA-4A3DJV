@@ -85,6 +85,7 @@ public class PileManager : MonoBehaviour
             pile[4].gameObject.GetComponent<PlayerControl>().Random = true;
             pile[4].gameObject.GetComponent<IdiotControler>().enabled = true;
             pile[4].gameObject.GetComponent<IdiotControler>().swaped = true;
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
             pile[4].gameObject.GetComponent<IdiotControler>().previousTime = timer;
         }
         /*else if (type == 3)
