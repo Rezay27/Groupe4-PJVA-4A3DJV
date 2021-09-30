@@ -24,6 +24,7 @@ public class PileManager : MonoBehaviour
         for (int i = 0; i < pile.Length; i++ ){
             pile[i].gameObject.GetComponent<PlayerControl>().enabled = false;
             pile[i].gameObject.GetComponent<IdiotControler>().enabled = false;
+            pile[i].gameObject.GetComponent<PlayerControl>().Player1 = false;
         }
     }
     
@@ -46,6 +47,7 @@ public class PileManager : MonoBehaviour
         {
             shape.gameObject.GetComponent<IdiotControler>().swaped = false;
             shape.gameObject.GetComponent<IdiotControler>().enabled = false;
+            pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
             timer = shape.gameObject.GetComponent<IdiotControler>().previousTime;
             shape.gameObject.GetComponent<IdiotControler>().previousTime = 0;
         }
@@ -74,6 +76,7 @@ public class PileManager : MonoBehaviour
         }
         else if (type == 1)
         {
+            pile[4].gameObject.GetComponent<PlayerControl>().enabled = true;
             pile[4].gameObject.GetComponent<PlayerControl>().Player1 = false;
             pile[4].gameObject.GetComponent<PlayerControl>().Random = false;
         }
